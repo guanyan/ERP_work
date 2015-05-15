@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 
 A = {
     'LT': 1,
