@@ -1,28 +1,108 @@
 #!/usr/bin/env node
 
 A = {
-    'LT': 1,
-    'ST': 0,
-    'SS': 25,
-    'LLC': 0,
-    'LS': 1,
-    'Comp': {
-        'C': 2,
-        'D': 1,
-    },
-    'OH': 20,
-    'AL': 0,
-    'OO': [0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    'GR': [0, 80, 50, 100, 60, 100, 70, 100, 60, 100, 50, 100, 50],
-    'SR': [0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    'POR': [0, 35, 100, 60, 100, 70, 100, 60, 100, 50, 100, 50, 0]
+  'LT': 1,
+  'ST': 0,
+  'SS': 25,
+  'LLC': 0,
+  'LS': 1,
+  'Comp': {
+    'C': 2,
+    'D': 1,
+  },
+  'OH': 20,
+  'AL': 0,
+  'OO': [0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  'GR': [0, 80, 50, 100, 60, 100, 70, 100, 60, 100, 50, 100, 50],
+  'SR': [0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  'POR': [0, 35, 100, 60, 100, 70, 100, 60, 100, 50, 100, 50, 0]
 };
+
+B = {
+  'LT': 1,
+  'ST': 0,
+  'SS': 20, 
+  'LLC': 0, 
+  'LS': 1,
+  'Comp': {
+    'C': 1,
+    'E': 1,
+  },
+  'OH': 40, 
+  'AL': 0, 
+  'OO': [0, 50, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  'GR': [0, 70, 100, 50, 90, 60, 110, 60, 100, 50, 100, 50, 100],
+  'SR': [0, 50, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  'POR': [0, 0, 50, 90, 60, 110, 60, 100, 50, 100, 50, 100, 0],
+}
+
+C = {
+  'LT': 1, 
+  'ST': 0,
+  'SS': 5,
+  'LLC': 2,
+  'LS': 500,
+  'Comp': {
+    'E': 1,
+    'F': 1,
+  },
+  'OH': 60, 
+  'AL': 0,
+  'OO': [0, 200, 150, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  'SR': [0, 200, 150, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+}
+
+D = {
+  'LT': 1,
+  'ST': 0, 
+  'SS': 5, 
+  'LLC': 1,
+  'LS': 200,
+  'Comp': {
+    'C': 1, 
+    'E': 2,
+  },
+  'OH': 60, 
+  'AL': 20,
+  'OO': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  'SR': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+}
+
+E = {
+  'LT': 2,
+  'ST': 0,
+  'SS': 50,
+  'LLC': 3,
+  'LS': 3,
+  'Comp': { 
+  },
+  'OH': 100, 
+  'AL': 0, 
+  'OO': [0, 1500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  'SR': [0, 1500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+}
+
+F = {
+  'LT': 2,
+  'ST': 1,
+  'SS': 100, 
+  'LLC': 3,
+  'LS': 2,
+  'Comp': {
+    
+  },
+  'OH': 100, 
+  'AL': 0,
+  'OO': [0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  'SR': [0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+}
 
 var max = function(a, b) {
   return a > b ? a : b;
 }
 
-var dump_array = function(arr) {
+var dump_array = function(title, arr) {
+  process.stdout.write(title + ':\t');
   for(var i = 0; i < arr.length; i++) {
     process.stdout.write(arr[i] + '\t');
   }
@@ -30,11 +110,13 @@ var dump_array = function(arr) {
 }
 
 var pretty_print = function(p) {
-  dump_array(p.POH);
-  dump_array(p.PAB);
-  dump_array(p.NR);
-  dump_array(p.PORcpt);
-  dump_array(p.POR);
+  dump_array('GR', p.GR);
+  dump_array('SR', p.SR);
+  dump_array('POH', p.POH);
+  dump_array('PAB', p.PAB);
+  dump_array('NR', p.NR);
+  dump_array('PORcpt', p.PORcpt);
+  dump_array('POR', p.POR);
 }
 
 var do_mrp = function(p) {
@@ -66,4 +148,8 @@ var do_mrp = function(p) {
   pretty_print(p);
 }
 
+console.log('A MRP');
 do_mrp(A);
+console.log('\n');
+console.log('B MRP');
+do_mrp(B);
