@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-A = {
+var A = {
   'LT': 1,
   'ST': 0,
   'SS': 25,
@@ -18,7 +18,7 @@ A = {
   'POR': [0, 35, 100, 60, 100, 70, 100, 60, 100, 50, 100, 50, 0]
 };
 
-B = {
+var B = {
   'LT': 1,
   'ST': 0,
   'SS': 20, 
@@ -34,9 +34,9 @@ B = {
   'GR': [0, 70, 100, 50, 90, 60, 110, 60, 100, 50, 100, 50, 100],
   'SR': [0, 50, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   'POR': [0, 0, 50, 90, 60, 110, 60, 100, 50, 100, 50, 100, 0],
-}
+};
 
-C = {
+var C = {
   'LT': 1, 
   'ST': 0,
   'SS': 5,
@@ -50,9 +50,9 @@ C = {
   'AL': 0,
   'OO': [0, 200, 150, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   'SR': [0, 200, 150, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-}
+};
 
-D = {
+var D = {
   'LT': 1,
   'ST': 0, 
   'SS': 5, 
@@ -66,9 +66,9 @@ D = {
   'AL': 20,
   'OO': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   'SR': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-}
+};
 
-E = {
+var E = {
   'LT': 2,
   'ST': 0,
   'SS': 50,
@@ -80,9 +80,9 @@ E = {
   'AL': 0, 
   'OO': [0, 1500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   'SR': [0, 1500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-}
+};
 
-F = {
+var F = {
   'LT': 2,
   'ST': 1,
   'SS': 100, 
@@ -95,13 +95,13 @@ F = {
   'AL': 0,
   'OO': [0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   'SR': [0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-}
+};
 
-var max = function(a, b) {
+function max(a, b) {
   return a > b ? a : b;
-}
+};
 
-var dump_array = function(title, arr) {
+function dump_array(title, arr) {
   process.stdout.write(title + ':\t');
   for(var i = 0; i < arr.length; i++) {
     process.stdout.write(arr[i] + '\t');
@@ -109,7 +109,7 @@ var dump_array = function(title, arr) {
   process.stdout.write('\n');
 }
 
-var pretty_print = function(p) {
+function pretty_print(p) {
   dump_array('GR', p.GR);
   dump_array('SR', p.SR);
   dump_array('POH', p.POH);
@@ -119,7 +119,7 @@ var pretty_print = function(p) {
   dump_array('POR', p.POR);
 }
 
-var do_mrp = function(p) {
+function do_mrp(p) {
   p.PAB = [0];
   p.POH = [0];
   p.PORcpt = [0];
