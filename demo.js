@@ -13,7 +13,7 @@ var Products ={
     },
     'OH': 20,
     'AL': 0,
-    'OO': [0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'OO': [0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     'GR': [0, 80, 50, 100, 60, 100, 70, 100, 60, 100, 50, 100, 50],
     'SR': [0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     'POR': [0, 35, 100, 60, 100, 70, 100, 60, 100, 50, 100, 50, 0]
@@ -117,7 +117,7 @@ function pretty_print(p) {
   dump_array('POR', p.POR);
 }
 
-function expand_mps(products) {
+function get_prodoct_by_llc(products) {
   var level = [];
   for (var p in products) {
     var product = products[p];
@@ -126,34 +126,39 @@ function expand_mps(products) {
     }
     level[product.LLC].push(p);
   }
-  console.log(level);
-  for (var l = 0; l < level.length; l++) {
-    var level_products = level[l];
-    for (var p in level_products) {
-      var parent = products[level_products[p]];
-      console.log(parent);
-      for (var child in parent.Comp) {
-        var t = products[child];
-        if (!t.hasOwnProperty('GR')) {
-          t.GR = [0];
-        } 
-        if (!parent.hasOwnProperty('POR')) {
-          continue;
-        }
-        for (var i = 0; i < t.OO.length; i++ ) {
-          if (typeof(t.GR[i]) == 'undefined') {
-            t.GR[i] = 0;
-          }
-          t.GR[i] += parent.POR[i] * parent.Comp[child];
-        }
+  return level;
+}
+
+
+function expand_product(parent, products) {
+  for (var child in parent.Comp) {
+    var t = products[child];
+    if (!t.hasOwnProperty('GR')) {
+      t.GR = [0];
+    } 
+    if (!parent.hasOwnProperty('POR')) {
+      return;
+    }
+    for (var i = 0; i < t.OO.length; i++ ) {
+      if (!t.GR.hasOwnProperty(i)) {
+        t.GR[i] = 0;
       }
-      do_mrp(parent);
+      t.GR[i] += parent.POR[i] * parent.Comp[child];
     }
   }
 }
 
+function do_level_iteration(products, func) {
+  var level = get_prodoct_by_llc(products);
+  for (var l = 0; l < level.length; l++) {
+    var level_products = level[l];
+    for (var p in level_products) {
+      func(p, products, level_products);
+    }
+  }
+}
 
-function do_mrp(p) {
+function do_mrp(p, products) {
   p.PAB = [0];
   p.POH = [0];
   p.PORcpt = [0];
@@ -181,18 +186,23 @@ function do_mrp(p) {
       p.PAB[t] = p.POH[t] + p.PORcpt[t];
       p.POR[t - p.LT] = p.PORcpt[t];
   }
+  // fill empty POR with 0
+  for (var j = 0; j < p.OO.length; j++) {
+    if (!p.POR.hasOwnProperty(j)) {
+      p.POR[j] = 0;
+    }
+  }
+  
+  expand_product(p, products);
   pretty_print(p);
+  console.log('\n');
 }
 
-/*
-console.log('A MRP');
-do_mrp(Products.A);
-console.log('\n');
-console.log('B MRP');
-do_mrp(Products.B);
-*/
-expand_mps(Products);
-//dump_array('GR', Products.C.GR);
-dump_array('GR', Products.D.GR);
+function main() {
+  do_level_iteration(Products, function(p, products, level_products) {
+    var parent = products[level_products[p]];
+    do_mrp(parent, products);
+  });
+}
 
-//do_mrp(Products.C);
+main();
