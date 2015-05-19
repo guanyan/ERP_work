@@ -27,14 +27,14 @@
     table tr th{
     	font-weight:bold;
     	border:1px solid #ccc;
-    	text-align:left;
+    	text-align:right;
     	margin:0;
     	padding:6px 13px,
     }
 
     table tr td{
     	border:1px solid #ccc;
-    	text-align:left;
+    	text-align:right;
     	margin:0;
     	padding:6px 13px
     }
@@ -246,13 +246,13 @@
       
       var headers =[];
       for (var i = 0; i < 13; i++) {
-        headers.push(<td>{i}</td>);
+        headers.push(<td width="50px">{i}</td>);
       }
       
       function makeTableRow(arr) {
         var result = [];
         for (var i = 0; i < arr.length; i++) {
-          result.push(<td>{arr[i]}</td>);
+          result.push(<td width="50px">{arr[i]}</td>);
         }
         return result;
       }
@@ -263,6 +263,7 @@
           return (
             <thead>
               <tr>
+                <td>Period</td>
                 {headers}
               </tr>
             </thead>
@@ -284,30 +285,37 @@
           return (
            <tbody>
              <tr>
+               <td>GR</td>
                {GRRow}
              </tr>
              
              <tr>
+               <td>SR</td>
                {SRRow}  
              </tr>
              
              <tr>
+               <td>POH</td>
                {POHRow}
              </tr>
              
              <tr>
+               <td>PAB</td>
                {PABRow}
              </tr>
              
              <tr>
+               <td>NR</td>
                {NRRow}
              </tr>
              
              <tr>
+               <td>PORcpt</td>
                {PORcptRow}
              </tr>
              
              <tr>
+               <td>POR</td>
                {PORRow}
              </tr>
            </tbody>
